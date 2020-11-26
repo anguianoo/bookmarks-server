@@ -10,9 +10,11 @@ const bodyParser = express.json();
 bookmarksRouter
   .route("/bookmarks")
   .get((req, res) => {
+    //move implementation logic here
     res.json(store.bookmarks);
   })
   .post(bodyParser, (req, res) => {
+    //move implementation logic into here
     for (const field of ["title", "url", "rating"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
@@ -42,11 +44,13 @@ bookmarksRouter
       .json(bookmark);
   });
 
+//getting One bookmark only
 bookmarksRouter
   .route("/bookmarks/:bookmark_id")
   .get((req, res) => {
     const { bookmark_id } = req.params;
 
+    //finding that One bookmark
     const bookmark = store.bookmarks.find((c) => c.id == bookmark_id);
 
     if (!bookmark) {
@@ -57,6 +61,7 @@ bookmarksRouter
     res.json(bookmark);
   })
   .delete((req, res) => {
+    //deleting the bookmark
     const { bookmark_id } = req.params;
 
     const bookmarkIndex = store.bookmarks.findIndex(
